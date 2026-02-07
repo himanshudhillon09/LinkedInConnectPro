@@ -1,0 +1,41 @@
+{
+    "manifest_version": 3,
+    "name": "LinkedIn Connect Pro",
+    "version": "1.0",
+    "description": "LinkedIn connection helper with targeting and weekly limits.",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://www.linkedin.com/*"
+    ],
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon16.png",
+        "128": "icons/icon16.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.linkedin.com/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "content.css"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    }
+}

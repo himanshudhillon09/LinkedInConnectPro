@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkConnect</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔗 LinkConnect</h1>
+      <div class="status-badge" id="statusBadge">Active</div>
+    </header>
+
+    <div class="stats-card">
+      <div class="stat">
+        <span class="stat-value" id="sentToday">0</span>
+        <span class="stat-divider">/</span>
+        <span class="stat-value" id="limitDisplay">10</span>
+      </div>
+      <div class="stat-label">Connections This Week</div>
+    </div>
+
+    <div class="settings-card">
+      <label for="maxInvites">Weekly Limit</label>
+      <input type="number" id="maxInvites" min="1" value="10">
+      <div class="help-text">Maximum connections per week</div>
+    </div>
+
+    <div class="actions">
+      <button id="startBtn" class="btn btn-start">🚀 Start Automation</button>
+      <button id="stopBtn" class="btn btn-stop" style="display: none;">⏹️ Stop Automation</button>
+      <button id="saveBtn" class="btn btn-primary">💾 Save Settings</button>
+      <button id="resetBtn" class="btn btn-secondary">🔄 Reset Week</button>
+    </div>
+
+    <div id="message" class="message"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

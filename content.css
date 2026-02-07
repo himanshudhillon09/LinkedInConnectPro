@@ -1,0 +1,120 @@
+#lcl-widget {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 280px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    z-index: 9999;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+#lcl-header {
+    background: #f3f2ef;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#lcl-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #191919;
+}
+
+#lcl-match-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.lcl-match-yes {
+    background: #057642;
+    color: white;
+}
+
+.lcl-match-no {
+    background: #d11124;
+    color: white;
+}
+
+.lcl-match-none {
+    background: #888;
+    color: white;
+}
+
+#lcl-body {
+    padding: 15px;
+}
+
+.lcl-stat {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lcl-stat-val {
+    font-weight: 600;
+    color: #191919;
+}
+
+.lcl-btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.lcl-btn {
+    flex: 1;
+    border: none;
+    padding: 8px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
+}
+
+.lcl-btn-primary {
+    background: #0a66c2;
+    color: white;
+}
+
+.lcl-btn-primary:hover {
+    background: #004182;
+}
+
+.lcl-btn-primary:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.lcl-btn-outline {
+    background: white;
+    border: 1px solid #0a66c2;
+    color: #0a66c2;
+}
+
+.lcl-btn-outline:hover {
+    background: #f0f7ff;
+}
+
+#lcl-msg {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #d11124;
+    min-height: 16px;
+}
+
+.lcl-hidden {
+    display: none !important;
+}

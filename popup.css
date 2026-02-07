@@ -1,0 +1,252 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  width: 320px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 400px;
+}
+
+.container {
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0a66c2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #057642;
+  color: white;
+  box-shadow: 0 2px 4px rgba(5, 118, 66, 0.3);
+}
+
+.status-badge.limit-reached {
+  background: #d11124;
+  box-shadow: 0 2px 4px rgba(209, 17, 36, 0.3);
+}
+
+.stats-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0a66c2;
+}
+
+.stat-divider {
+  font-size: 24px;
+  color: #999;
+  font-weight: 300;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.settings-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e0e0e0;
+}
+
+.settings-card label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.settings-card input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.settings-card input:focus {
+  outline: none;
+  border-color: #0a66c2;
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+}
+
+.help-text {
+  font-size: 11px;
+  color: #999;
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(10, 102, 194, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: white;
+  color: #0a66c2;
+  border: 2px solid #0a66c2;
+}
+
+.btn-secondary:hover {
+  background: #f0f7ff;
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-start {
+  background: linear-gradient(135deg, #057642 0%, #045a33 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(5, 118, 66, 0.3);
+  font-size: 16px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(5, 118, 66, 0.4);
+}
+
+.btn-start:active {
+  transform: translateY(0);
+}
+
+.btn-start:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-stop {
+  background: linear-gradient(135deg, #d11124 0%, #a00d1a 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(209, 17, 36, 0.3);
+  font-size: 16px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.btn-stop:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(209, 17, 36, 0.4);
+}
+
+.btn-stop:active {
+  transform: translateY(0);
+}
+
+.message {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.message.show {
+  opacity: 1;
+}
+
+.message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
