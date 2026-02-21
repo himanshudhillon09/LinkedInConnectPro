@@ -11,15 +11,15 @@ let shouldStopAutomation = false;
             if (result.autoStart) {
                 const url = window.location.href;
                 const isGrow = url.includes('/mynetwork/grow/') || url.includes('/feed/');
-                
+
                 if (isGrow) {
                     // Wait for cohort cards to appear
                     let attempts = 0;
                     const maxAttempts = 20;
-                    
+
                     const checkAndStart = () => {
                         const hasCohortCards = document.querySelector('[data-view-name="cohort-card"]');
-                        
+
                         if (hasCohortCards || attempts >= maxAttempts) {
                             console.log('LinkConnect: Auto-starting automation...');
                             shouldStopAutomation = false;
@@ -31,7 +31,7 @@ let shouldStopAutomation = false;
                             setTimeout(checkAndStart, 500);
                         }
                     };
-                    
+
                     setTimeout(checkAndStart, 1000);
                 } else {
                     chrome.storage.local.set({ autoStart: false });
@@ -128,7 +128,7 @@ async function startGrowSequence() {
             console.log('LinkConnect: Found "Show all" button, clicking it...');
             showAllButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
             await delay(500);
-            
+
             try {
                 showAllButton.click();
                 console.log('LinkConnect: Clicked "Show all" button');
@@ -157,38 +157,66 @@ async function startGrowSequence() {
         });
 
         const allConnectButtons = [...new Set([...connectButtons, ...connectButtonsByAria])];
-        
+
         // Filter out already processed buttons
-        const availableButtons = allConnectButtons.filter(b => 
+        const availableButtons = allConnectButtons.filter(b =>
             b.offsetParent && !b.disabled && !processedButtons.has(b)
         );
 
         if (availableButtons.length === 0) {
             if (shouldStopAutomation) {
                 console.log('LinkConnect: Automation stopped by user.');
-            break;
-        }
-
-            // No new buttons found, scroll to load more
-            console.log('LinkConnect: Scrolling to load more...');
-            const scrollHeightBefore = document.body.scrollHeight;
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            await delay(2000);
-            
-            if (shouldStopAutomation) {
-                console.log('LinkConnect: Automation stopped by user.');
                 break;
             }
-            
+
+            // No new buttons found, try clicking "Load more" or scrolling cohort container
+            console.log('LinkConnect: Finding "Load more" or scrolling container...');
+
+            const allButtons = Array.from(document.querySelectorAll('button'));
+            const loadMoreBtn = allButtons.find(b => {
+                const text = b.textContent.trim().toLowerCase();
+                return text === 'load more' || text === 'see more suggestions' || text === 'show all suggestions';
+            });
+
+            if (loadMoreBtn && loadMoreBtn.offsetParent) {
+                console.log('LinkConnect: Found "Load more" button, clicking...');
+                loadMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                await delay(800);
+                loadMoreBtn.click();
+                await delay(2500);
+                noNewContentCount = 0;
+                continue;
+            }
+
+            // Fallback to scrolling the last cohort card or the container
+            const scrollHeightBefore = document.body.scrollHeight;
+            const cohortCards = document.querySelectorAll('[data-view-name="cohort-card"]');
+
+            if (cohortCards.length > 0) {
+                const lastCard = cohortCards[cohortCards.length - 1];
+                console.log('LinkConnect: Scrolling last cohort card into view...');
+                lastCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                await delay(2000);
+            } else {
+                console.log('LinkConnect: Scrolling window as fallback...');
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                await delay(2000);
+            }
+
+            if (shouldStopAutomation) break;
+
+            // Check if new buttons appeared or scroll height changed
+            const newConnectButtons = Array.from(document.querySelectorAll('button[data-view-name="edge-creation-connect-action"]'))
+                .filter(b => b.offsetParent && !b.disabled && !processedButtons.has(b));
+
             const scrollHeightAfter = document.body.scrollHeight;
-            
-            // Check if new content loaded
-            if (scrollHeightAfter === scrollHeightBefore) {
+
+            if (newConnectButtons.length === 0 && scrollHeightAfter === scrollHeightBefore) {
                 noNewContentCount++;
                 console.log(`LinkConnect: No new content (${noNewContentCount}/${maxNoNewContent})...`);
                 await delay(1000);
             } else {
-                noNewContentCount = 0; // Reset counter if new content loaded
+                noNewContentCount = 0;
             }
             continue;
         }
@@ -199,7 +227,7 @@ async function startGrowSequence() {
                 console.log('LinkConnect: Automation stopped by user.');
                 break;
             }
-            
+
             if (settings.countThisWeek >= settings.maxInvites) {
                 console.log('LinkConnect: Weekly limit reached.');
                 break;
@@ -213,9 +241,9 @@ async function startGrowSequence() {
             }
 
             // Find parent card to mark as processed
-            const card = connectBtn.closest('[data-view-name="cohort-card"]') || 
-                         connectBtn.closest('[role="listitem"]') ||
-                         connectBtn.parentElement?.parentElement;
+            const card = connectBtn.closest('[data-view-name="cohort-card"]') ||
+                connectBtn.closest('[role="listitem"]') ||
+                connectBtn.parentElement?.parentElement;
 
             connectBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
             await delay(300);
@@ -250,7 +278,7 @@ async function startGrowSequence() {
     }
 
     isAutomationRunning = false;
-    
+
     if (shouldStopAutomation) {
         console.log(`LinkConnect: Automation stopped. Processed ${processedButtons.size} connections.`);
     } else if (noNewContentCount >= maxNoNewContent) {
@@ -265,22 +293,22 @@ async function handleConnectModal() {
     try {
 
         // Wait for modal
-    let modal = null;
-    for (let i = 0; i < 50; i++) {
-        modal = document.querySelector('.artdeco-modal');
-        if (modal) break;
-        await delay(100);
-    }
+        let modal = null;
+        for (let i = 0; i < 50; i++) {
+            modal = document.querySelector('.artdeco-modal');
+            if (modal) break;
+            await delay(100);
+        }
 
-    if (!modal) {
-        return;
-    }
+        if (!modal) {
+            return;
+        }
 
         await delay(300);
 
         // Find "Send without a note" button
         let sendBtn = modal.querySelector('button[aria-label="Send without a note"]');
-        
+
         if (!sendBtn) {
             const actionbar = modal.querySelector('.artdeco-modal__actionbar');
             if (actionbar) {
@@ -293,7 +321,7 @@ async function handleConnectModal() {
             await delay(100);
             sendBtn.click();
             await delay(300);
-            
+
             // Wait for modal to close
             for (let i = 0; i < 20; i++) {
                 await delay(50);
